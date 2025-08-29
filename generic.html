@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Word Check</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter the secret word</h1>
+  <input type="text" id="wordInput" placeholder="Type here">
+  <button onclick="checkWord()">Submit</button>
+
+  <script>
+    // Get the current file name (last part of the URL)
+    const currentPage = window.location.pathname.split("/").pop();
+
+    // If Game Over flag is set and NOT on titles.html → wipe page
+    if (localStorage.getItem("gameOver") === "true" && currentPage !== "titles.html") {
+      document.body.innerHTML = "<h1 style='color:red; font-size:60px; text-align:center;'>Game Over</h1>";
+    }
+
+    function checkWord() {
+      const input = document.getElementById("wordInput").value.trim();
+      if (input.toLowerCase() === "bruh") {
+        // launch confetti
+        confetti({
+          particleCount: 150,
+          spread: 80,
+          origin: { y: 0.6 }
+        });
+      } else {
+        // set Game Over flag
+        localStorage.setItem("gameOver", "true");
+        // only wipe this page if it's not titles.html
+        if (currentPage !== "titles.html") {
+          document.body.innerHTML = "<h1 style='color:red; font-size:60px; text-align:center;'>Game Over</h1>";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
